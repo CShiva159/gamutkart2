@@ -26,7 +26,7 @@ pipeline {
                                  }
                     steps {
                        withDockerRegistry([ credentialsId: "", url: "https://hub.docker.com" ]) {
-                        sh 'docker push siva1995/jenkins_image:latest'
+                        sh 'docker push shiva1992/jenkins_image:latest'
         
        }
      }
