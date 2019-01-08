@@ -1,0 +1,43 @@
+pipeline {
+        agent any
+
+         triggers {
+                 pollSCM('H/4 * * * 1-7')
+                }
+
+
+        parameters {
+              choice(name: 'ENVIRONMENT', choices: ['QA', 'SIT'], description: 'Pick something')
+           }
+          stages {
+            stage('Checkout') {
+                steps {
+                       checkout scm                 
+                    }}
+                stage('Build') {
+                steps {
+                                sh '/home/raj/Distros/apache-maven-3.6.0/bin/mvn install'
+            }}
+            stage('Deployment') {
+                steps {
+                  script {
+
+        	   if (ENVIRONMENT == 'QA'){
+           		sh 'sshpass -p "raj" scp target/gamutkart.war raj@172.17.0.3:/home/raj/Distros/apache-tomcat-8.5.35/webapps'
+		        sh 'sshpass -p "raj" ssh raj@172.17.0.3 "JAVA_HOME=/home/raj/Distros/jdk1.8.0_191" "/home/raj/Distros/apache-tomcat-8.5.35/bin/startup.sh"'
+                        echo "hello ${params.ENVIRONMENT}"
+		   }
+                  else if (ENVIRONMENT == 'SIT'){
+			sh 'sshpass -p "raj" scp target/gamutkart.war raj@172.17.0.3:/home/raj/Distros/apache-tomcat-8.5.35/webapps'
+		        sh 'sshpass -p "raj" ssh raj@172.17.0.4 "JAVA_HOME=/home/raj/Distros/jdk1.8.0_191" "/home/raj/Distros/apache tomcat-8.5.35/bin/startup.sh"'
+                        
+                        echo "hello ${params.ENVIRONMENT}"
+
+                 }
+                 
+	 	}}}
+           }
+          
+                   
+  	 }
+  

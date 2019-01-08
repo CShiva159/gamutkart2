@@ -1,0 +1,29 @@
+
+pipeline {
+	agent {
+		label 'slave1'
+	} 
+
+	stages {
+	    stage('Checkout') {
+	        steps {
+				checkout scm			        }
+		    }
+		stage('Build') {
+	        steps {
+				sh 'JAVA_HOME=/home/shiva/Distros/jdk1.8.0_191 /home/shiva/Distros/apache-maven-3.6.0/bin/mvn install'
+	        }
+		}
+
+        stage('Deployment') {
+                      steps {
+                            sh 'sshpass -p "shiva" scp target/gamutkart.war shiva@172.17.0.2:/home/shiva/Distros/apache-tomcat-8.5.35/webapps'                    }
+                 }
+                 stage('Startup') {
+                        steps {   sh 'sshpass -p "shiva" ssh -o StrictHostkeyChecking=no shiva@172.17.0.2 JAVA_HOME=/home/shiva/Distros/jdk1.8.0_191 /home/shiva/Distros/apache-tomcat-8.5.35/bin/startup.sh'
+                 }
+                 }
+
+
+	}
+}
