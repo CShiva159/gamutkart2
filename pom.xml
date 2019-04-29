@@ -1,8 +1,8 @@
 <project>
 	<modelVersion>4.0.0</modelVersion>
 	<properties>
-    		<maven.compiler.source>1.6</maven.compiler.source>
-    		<maven.compiler.target>1.6</maven.compiler.target>
+    		<maven.compiler.source>12</maven.compiler.source>
+    		<maven.compiler.target>12</maven.compiler.target>
 	</properties>
 <!-- this is a comment -->	
 	<groupId>com.gamutgurus</groupId>
@@ -14,14 +14,14 @@
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>6.2.0</version>
+			<version>3.8.0</version>
 			<scope>test</scope>
 		</dependency>
 	
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
-			<version>6.2.0</version>
+			<version>3.8.0</version>
 		</dependency>
 			
 	</dependencies>
