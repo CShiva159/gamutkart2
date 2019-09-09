@@ -10,16 +10,16 @@ pipeline {
                     }
                 stage('Build') {
                 steps {
-                                sh ('/home/raavana/distros/apache-maven-3.6.0/bin/mvn install')
+                                sh ('mvn install')
                 }
                 }
                 stage('Deployment') {
                       steps {
-                            sh 'sshpass -p "raja" scp target/gamutkart.war raja@172.17.0.2:/home/raja/distros/apache-tomcat-8.5.39/webapps'                    }
+                            sh 'cp -R target/gamutkart.war /home/ubuntu/apache-tomcat-8.5.45/webapps'                    }
                  }
                  stage('Startup') {
 			steps {
-			   sh 'sshpass -p "raja" ssh raja@172.17.0.2 JAVA_HOME=/home/raja/distros/jdk1.8.0_202 /home/raja/distros/apache-tomcat-8.5.39/bin/startup.sh' 
+			   sh 'JAVA_HOME=/home/ubuntu/jdk1.8.0_141 /home/ubuntu/apache-tomcat-8.5.45/bin/startup.sh' 
                  }
                  }
                  }
